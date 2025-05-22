@@ -1,0 +1,11 @@
+.DS_Store
+.vscode
+.vscode/*
+.venv
+
+__pycache__
+__pycache__/*
+.pytest_cache
+
+_*
+!__init__.py
