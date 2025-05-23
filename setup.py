@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="display_df",
-    version="0.1.6",
+    version="0.1.7",
     description="An interactive Pandas DataFrame viewer that enables better-than-notepad viewing abilities in normal Python files 👀",
     long_description=long_description,
     long_description_content_type="text/markdown",
