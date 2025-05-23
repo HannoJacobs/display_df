@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="display_df",
-    version="0.1.0",
+    version="0.1.1",
     description="Interactive DataFrame viewer with enhanced search (PyQt5)",
     author="Your Name",
     author_email="your.email@example.com",
