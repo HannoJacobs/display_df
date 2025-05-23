@@ -1,6 +1,7 @@
 # display_df
 
 The tool enables viewing and searching of a pandas DataFrame in a UI.
+- View multi-million line DataFrames interactively
 - It's faster than viewing a .csv in Excel
 - It can display a nearly unlimited number of lines
 - You can search all or just a subset of columns
@@ -17,17 +18,15 @@ pip install display_df
 
 ```python
 import pandas as pd
-from display_df.display_df import display_df
+from display_df import display_df
 
 df1 = pd.DataFrame({...})
-display_df(df_=df1, window_title="This is the first title of your df window, for debugging purposes")
-
-df2 = pd.DataFrame({...})
-display_df(df_=df2, window_title="This is the second title of your df window, for debugging purposes")
+display_df(df_=df1, window_title="This is a title of your df window, for debugging purposes")
 ```
 
 ## Features
 - Interactive search by column or all columns
+- View multi-million line DataFrames interactively
 - PyQt5 GUI
 
 ## License
