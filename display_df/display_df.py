@@ -159,9 +159,7 @@ if __name__ == "__main__":
             "value1": [random.randint(1, 1000) for _ in range(rows)],
             "value2": [round(random.normalvariate(100, 25), 2) for _ in range(rows)],
             "active": [random.choice([True, False]) for _ in range(rows)],
-            "rating_sdfhalsdhfkdsf_dfhsdlfhlsd": [
-                random.randint(1, 5) for _ in range(rows)
-            ],
+            "rating": [random.randint(1, 5) for _ in range(rows)],
             "email": ["user" + str(i) + "@example.com" for i in range(rows)],
             "description": ["Description for record " + str(i) for i in range(rows)],
         }
