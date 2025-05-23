@@ -15,6 +15,7 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QLabel,
     QComboBox,
+    QHeaderView,
 )
 from PyQt5.QtCore import QAbstractTableModel, Qt, QModelIndex
 
@@ -103,7 +104,18 @@ def display_df(df_, window_title="DataFrame Viewer"):
     original_df = df_.copy()
     model = PandasModel(df_)
     view.setModel(model)
-    view.resizeColumnsToContents()
+
+    # Resize columns to fit header text only
+    header = view.horizontalHeader()
+    font_metrics = header.fontMetrics()
+    min_column_width = 100  # Minimum width for readability
+    for col in range(model.columnCount()):
+        header_text = model.headerData(col, Qt.Horizontal, Qt.DisplayRole)
+        text_width = font_metrics.horizontalAdvance(str(header_text))
+        # Add some padding (20 pixels) and ensure minimum width
+        column_width = max(text_width + 20, min_column_width)
+        view.setColumnWidth(col, column_width)
+
     layout.addWidget(view)
 
     # Enhanced search functionality
@@ -128,12 +140,36 @@ def display_df(df_, window_title="DataFrame Viewer"):
             filtered_df = original_df[column_data.str.contains(search_text)]
 
         view.setModel(PandasModel(filtered_df))
-        view.resizeColumnsToContents()
+
+        # Resize columns to fit header text only
+        header = view.horizontalHeader()
+        model = view.model()
+        font_metrics = header.fontMetrics()
+        for col in range(model.columnCount()):
+            header_text = model.headerData(col, Qt.Horizontal, Qt.DisplayRole)
+            text_width = font_metrics.horizontalAdvance(str(header_text))
+            # Add some padding (20 pixels) and ensure minimum width
+            min_column_width = 100
+            column_width = max(text_width + 20, min_column_width)
+            view.setColumnWidth(col, column_width)
+
         status_label.setText(f"Found {len(filtered_df)} of {len(original_df)} records")
 
     def reset():
         view.setModel(PandasModel(original_df))
-        view.resizeColumnsToContents()
+
+        # Resize columns to fit header text only
+        header = view.horizontalHeader()
+        model = view.model()
+        font_metrics = header.fontMetrics()
+        for col in range(model.columnCount()):
+            header_text = model.headerData(col, Qt.Horizontal, Qt.DisplayRole)
+            text_width = font_metrics.horizontalAdvance(str(header_text))
+            # Add some padding (20 pixels) and ensure minimum width
+            min_column_width = 100
+            column_width = max(text_width + 20, min_column_width)
+            view.setColumnWidth(col, column_width)
+
         search_input.clear()
         status_label.setText(f"Showing all {len(original_df)} records")
 
