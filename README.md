@@ -1,4 +1,4 @@
-# display_df
+# display_df: A pip-installable, interactive, Pandas DataFrame viewer that enables better-than-notepad viewing abilities in normal Python files 👀
 
 The tool enables viewing and searching of a pandas DataFrame in a UI.
 - View multi-million line DataFrames interactively
