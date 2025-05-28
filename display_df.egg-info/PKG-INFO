@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: display_df
-Version: 0.1.7
+Version: 0.2.0
 Summary: An interactive Pandas DataFrame viewer that enables better-than-notepad viewing abilities in normal Python files 👀
 Home-page: https://github.com/yourusername/display_df
 Author: Your Name

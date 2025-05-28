@@ -67,8 +67,20 @@ def display_df(df_, window_title="DataFrame Viewer"):
     window.setCentralWidget(central_widget)
     layout = QVBoxLayout(central_widget)
 
+    # --- Add shape label ---
+    shape_label = QLabel()
+
+    def update_shape_label(current_df):
+        shape_label.setText(f"Shape: ({current_df.shape[0]}, {current_df.shape[1]})")
+
+    update_shape_label(df_)
+    # --- End shape label addition ---
+
     # Search area
     search_layout = QHBoxLayout()
+
+    # Add shape label to the far left of the search layout
+    search_layout.addWidget(shape_label)
 
     # Column selector
     column_label = QLabel("Column:")
@@ -85,9 +97,6 @@ def display_df(df_, window_title="DataFrame Viewer"):
     search_button = QPushButton("Search")
     reset_button = QPushButton("Reset")
 
-    # Status label
-    status_label = QLabel("Showing all records")
-
     # Add widgets to search layout
     search_layout.addWidget(column_label)
     search_layout.addWidget(column_combo)
@@ -97,7 +106,6 @@ def display_df(df_, window_title="DataFrame Viewer"):
     search_layout.addWidget(reset_button)
 
     layout.addLayout(search_layout)
-    layout.addWidget(status_label)
 
     # Table view
     view = QTableView()
@@ -128,14 +136,12 @@ def display_df(df_, window_title="DataFrame Viewer"):
             return
 
         if selected_column == "All Columns":
-            # Search across all columns (existing functionality)
             filtered_df = original_df[
                 original_df.astype(str).apply(
                     lambda row: row.str.lower().str.contains(search_text).any(), axis=1
                 )
             ]
         else:
-            # Search in specific column
             column_data = original_df[selected_column].astype(str).str.lower()
             filtered_df = original_df[column_data.str.contains(search_text)]
 
@@ -148,12 +154,11 @@ def display_df(df_, window_title="DataFrame Viewer"):
         for col in range(model.columnCount()):
             header_text = model.headerData(col, Qt.Horizontal, Qt.DisplayRole)
             text_width = font_metrics.horizontalAdvance(str(header_text))
-            # Add some padding (20 pixels) and ensure minimum width
             min_column_width = 100
             column_width = max(text_width + 20, min_column_width)
             view.setColumnWidth(col, column_width)
 
-        status_label.setText(f"Found {len(filtered_df)} of {len(original_df)} records")
+        update_shape_label(filtered_df)
 
     def reset():
         view.setModel(PandasModel(original_df))
@@ -165,13 +170,12 @@ def display_df(df_, window_title="DataFrame Viewer"):
         for col in range(model.columnCount()):
             header_text = model.headerData(col, Qt.Horizontal, Qt.DisplayRole)
             text_width = font_metrics.horizontalAdvance(str(header_text))
-            # Add some padding (20 pixels) and ensure minimum width
             min_column_width = 100
             column_width = max(text_width + 20, min_column_width)
             view.setColumnWidth(col, column_width)
 
         search_input.clear()
-        status_label.setText(f"Showing all {len(original_df)} records")
+        update_shape_label(original_df)
 
     search_button.clicked.connect(search)
     reset_button.clicked.connect(reset)
